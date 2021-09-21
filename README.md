@@ -3,6 +3,7 @@
 Copy this template to create a Bazel ruleset.
 
 Features:
+
 - follows the official style guide at https://docs.bazel.build/versions/main/skylark/deploying.html
 - includes Bazel formatting as a pre-commit hook (using [buildifier])
 
