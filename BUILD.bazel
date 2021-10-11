@@ -8,6 +8,7 @@ pkg_tar(
         "LICENSE",
         "README.md",
         "version.bzl",
+        "//mylang:package_content",
     ],
     extension = "tar.gz",
     # It is all source code, so make it read-only.

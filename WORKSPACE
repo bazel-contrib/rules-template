@@ -9,10 +9,15 @@ workspace(
 )
 
 # Install our "runtime" dependencies which users install as well
-load("//mylang:repositories.bzl", "rules_mylang_dependencies")
+load("//mylang:repositories.bzl", "mylang_register_toolchains", "rules_mylang_dependencies")
 
 rules_mylang_dependencies()
 
 load(":internal_deps.bzl", "rules_mylang_internal_deps")
 
 rules_mylang_internal_deps()
+
+mylang_register_toolchains(
+    name = "mylang1_14",
+    mylang_version = "1.14.2",
+)
