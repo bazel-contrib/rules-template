@@ -1,7 +1,0 @@
-"""These tests guarantee that we don't accidentally leak development dependencies.
-
-For example, if we include a load() statement from rules_pkg in our release artifact,
-but users don't have rules_pkg in their workspace, it will fail.
-
-See note in /CONTRIBUTING.md about setting up your bazel.
-"""
