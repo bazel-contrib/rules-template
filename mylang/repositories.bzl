@@ -27,7 +27,10 @@ def rules_mylang_dependencies():
         ],
     )
 
-_DOC = "TODO"
+########
+# Remaining content of the file is only used to support toolchains.
+########
+_DOC = "Fetch external tools needed for mylang toolchain"
 _ATTRS = {
     "mylang_version": attr.string(mandatory = True, values = TOOL_VERSIONS.keys()),
     "platform": attr.string(mandatory = True, values = PLATFORMS.keys()),
