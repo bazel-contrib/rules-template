@@ -32,6 +32,7 @@ directory:
 ```sh
 OVERRIDE="--override_repository=rules_mylang=$(pwd)/rules_mylang"
 echo "build $OVERRIDE" >> ~/.bazelrc
+echo "fetch $OVERRIDE" >> ~/.bazelrc
 echo "query $OVERRIDE" >> ~/.bazelrc
 ```
 
