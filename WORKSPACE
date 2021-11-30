@@ -15,7 +15,7 @@ rules_mylang_internal_deps()
 
 load("//mylang:repositories.bzl", "mylang_register_toolchains", "rules_mylang_dependencies")
 
-# Fetch our "runtime" dependencies which users need as well
+# Fetch dependencies which users need as well
 rules_mylang_dependencies()
 
 mylang_register_toolchains(
