@@ -1,5 +1,4 @@
 # Declare the local Bazel workspace.
-# This is *not* included in the published distribution.
 workspace(
     # If your ruleset is "official"
     # (i.e. is in the bazelbuild GitHub org)
@@ -24,9 +23,9 @@ mylang_register_toolchains(
 )
 
 # For running our own unit tests
-load("@bazel_skylib//lib:unittest.bzl", "register_unittest_toolchains")
+load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 
-register_unittest_toolchains()
+bazel_skylib_workspace()
 
 ############################################
 # Gazelle, for generating bzl_library targets

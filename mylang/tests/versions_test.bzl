@@ -12,7 +12,7 @@ def _smoke_test_impl(ctx):
 
 # The unittest library requires that we export the test cases as named test rules,
 # but their names are arbitrary and don't appear anywhere.
-t0_test = unittest.make(_smoke_test_impl)
+_t0_test = unittest.make(_smoke_test_impl)
 
 def versions_test_suite(name):
-    unittest.suite(name, t0_test)
+    unittest.suite(name, _t0_test)

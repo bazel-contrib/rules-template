@@ -1,5 +1,4 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 
 gazelle_binary(
@@ -10,29 +9,6 @@ gazelle_binary(
 gazelle(
     name = "gazelle",
     gazelle = "gazelle_bin",
-)
-
-# This declares the release artifact users fetch.
-# You could rely on GitHub to provide an archive URL that packages the repo on the fly.
-# We create a tar for a few reasons:
-# - we can calculate the checksum ourselves to write a WORKSPACE snippet during release
-# - GitHub occasionally changes their frontend servers in a way that changes all the SHAs
-# - Users shouldn't fetch our tests, examples, or docs. This both saves download bytes, and
-#   also allows users to use a bazel pattern like `@com_myorg_rules_mylang//...` without
-#   bumping into load() statements from our dev dependencies
-pkg_tar(
-    name = "rules_mylang",
-    srcs = [
-        "LICENSE",
-        "README.md",
-        "//mylang:package_content",
-    ],
-    extension = "tar.gz",
-    # It is all source code, so make it read-only.
-    mode = "0444",
-    # Make it owned by root so it does not have the uid of the CI robot.
-    owner = "0.0",
-    strip_prefix = ".",
 )
 
 bzl_library(
