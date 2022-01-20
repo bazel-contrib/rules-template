@@ -26,15 +26,7 @@ jobs:
         env:
           # Bazelisk will download bazel to here
           XDG_CACHE_HOME: ~/.cache/bazel-repo
-        run: |
-          bazel \
-            --bazelrc=.github/workflows/ci.bazelrc \
-            --bazelrc=.bazelrc \
-            test \
-            --disk_cache="${HOME}/.cache/bazel" \
-            --repository_cache="${HOME}/.cache/bazel-repo" \
-            //...
-
+        run: bazel --bazelrc=.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //...
       - name: Prepare workspace snippet
         run: .github/workflows/workspace_snippet.sh ${{ env.GITHUB_REF_NAME }} > release_notes.txt
       - name: Release
