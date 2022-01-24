@@ -24,7 +24,7 @@ http_archive(
 # you should fetch it *before* calling this.
 # Alternatively, you can skip calling this function, so long as you've
 # already fetched all the dependencies.
-load("@com_myorg_rules_mylang//mylang:dependencies.bzl", "rules_mylang_dependencies")
+load("@com_myorg_rules_mylang//mylang:repositories.bzl", "rules_mylang_dependencies")
 rules_mylang_dependencies()
 
 \`\`\`
