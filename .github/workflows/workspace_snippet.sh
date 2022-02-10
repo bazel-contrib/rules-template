@@ -16,7 +16,7 @@ http_archive(
     name = "com_myorg_rules_mylang",
     sha256 = "${SHA}",
     strip_prefix = "${PREFIX}",
-    url = "https://github.com/myorg/rules_mylang/archive/${TAG}.tar.gz",
+    url = "https://github.com/myorg/rules_mylang/archive/refs/tags/${TAG}.tar.gz",
 )
 
 # Fetches the rules_mylang dependencies.
