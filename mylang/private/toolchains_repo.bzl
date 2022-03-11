@@ -86,10 +86,11 @@ resolved_toolchain(name = "resolved_toolchain", visibility = ["//visibility:publ
 
     for [platform, meta] in PLATFORMS.items():
         build_content += """
+# Declare a toolchain Bazel will select for running the tool in an action
+# on the execution platform.
 toolchain(
     name = "{platform}_toolchain",
     exec_compatible_with = {compatible_with},
-    target_compatible_with = {compatible_with},
     toolchain = "@{user_repository_name}_{platform}//:mylang_toolchain",
     toolchain_type = "@com_myorg_rules_mylang//mylang:toolchain_type",
 )
