@@ -15,6 +15,13 @@ jobs:
   test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    
+    # Run bazel test in each workspace
+    strategy:
+      matrix:
+          folder:
+              - '.'
+              - 'e2e/workspace'
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -43,4 +50,5 @@ jobs:
         env:
           # Bazelisk will download bazel to here, ensure it is cached between runs.
           XDG_CACHE_HOME: ~/.cache/bazel-repo
-        run: bazel --bazelrc=.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //...
+        working-directory: ${{ matrix.folder }}
+        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc --bazelrc=.bazelrc test //...
