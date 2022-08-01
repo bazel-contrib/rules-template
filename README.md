@@ -24,6 +24,7 @@ Ready to get started? Copy this repo, then
 1. run `pre-commit install` to get lints (see CONTRIBUTING.md)
 1. if you don't need to fetch platform-dependent tools, then remove anything toolchain-related.
 1. update the `actions/cache@v2` bazel cache key in [.github/workflows/ci.yaml](.github/workflows/ci.yaml) and [.github/workflows/release.yml](.github/workflows/release.yml) to be a hash of your source files.
+1. (optional) install the [Renovate app](https://github.com/apps/renovate) to get auto-PRs to keep the dependencies up-to-date.
 1. delete this section of the README (everything up to the SNIP).
 
 ---- SNIP ----
