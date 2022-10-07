@@ -11,3 +11,9 @@ bzl_library(
     srcs = ["versions.bzl"],
     visibility = ["//dart:__subpackages__"],
 )
+
+bzl_library(
+    name = "binary",
+    srcs = ["binary.bzl"],
+    visibility = ["//dart:__subpackages__"],
+)

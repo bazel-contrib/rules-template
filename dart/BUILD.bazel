@@ -27,6 +27,7 @@ bzl_library(
     name = "defs",
     srcs = ["defs.bzl"],
     visibility = ["//visibility:public"],
+    deps = ["//dart/private:binary"],
 )
 
 bzl_library(
