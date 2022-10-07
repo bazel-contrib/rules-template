@@ -18,8 +18,8 @@ load("//dart:repositories.bzl", "dart_register_toolchains", "rules_dart_dependen
 rules_dart_dependencies()
 
 dart_register_toolchains(
-    name = "dart1_14",
-    dart_version = "1.14.2",
+    name = "dart2_18",
+    dart_version = "2.18.2",
 )
 
 # For running our own unit tests
