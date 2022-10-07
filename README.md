@@ -17,7 +17,7 @@ See https://docs.bazel.build/versions/main/skylark/deploying.html#readme
 
 Ready to get started? Copy this repo, then
 
-1. search for "com_myorg_rules_mylang" and replace with the name you'll use for your workspace
+1. ~~search for "dev_bivens_rules_dart" and replace with the name you'll use for your workspace~~
 1. search for "myorg" and replace with GitHub org
 1. search for "mylang" and replace with the language/tool your rules are for
 1. rename directory "mylang" similarly

@@ -4,7 +4,7 @@ workspace(
     # (i.e. is in the bazelbuild GitHub org)
     # then this should just be named "rules_mylang"
     # see https://docs.bazel.build/versions/main/skylark/deploying.html#workspace
-    name = "com_myorg_rules_mylang",
+    name = "dev_bivens_rules_dart",
 )
 
 load(":internal_deps.bzl", "rules_mylang_internal_deps")
