@@ -16,7 +16,7 @@ http_archive(
     name = "dev_bivens_rules_dart",
     sha256 = "${SHA}",
     strip_prefix = "${PREFIX}",
-    url = "https://github.com/myorg/rules_mylang/archive/refs/tags/${TAG}.tar.gz",
+    url = "https://github.com/bivens-dev/rules_mylang/archive/refs/tags/${TAG}.tar.gz",
 )
 EOF
 

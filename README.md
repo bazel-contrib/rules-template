@@ -18,7 +18,7 @@ See https://docs.bazel.build/versions/main/skylark/deploying.html#readme
 Ready to get started? Copy this repo, then
 
 1. ~~search for "dev_bivens_rules_dart" and replace with the name you'll use for your workspace~~
-1. search for "myorg" and replace with GitHub org
+1. ~~search for "bivens-dev" and replace with GitHub org~~
 1. search for "mylang" and replace with the language/tool your rules are for
 1. rename directory "mylang" similarly
 1. run `pre-commit install` to get lints (see CONTRIBUTING.md)
@@ -34,5 +34,5 @@ Ready to get started? Copy this repo, then
 ## Installation
 
 From the release you wish to use:
-<https://github.com/myorg/rules_mylang/releases>
+<https://github.com/bivens-dev/rules_mylang/releases>
 copy the WORKSPACE snippet into your `WORKSPACE` file.
