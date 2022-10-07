@@ -1,4 +1,4 @@
-"implementation details for dart_binary"
+"implementation details for dart_vm_binary"
 
 def _dart_binary_impl(ctx):
     is_windows = ctx.target_platform_has_constraint(ctx.attr._windows_constraint[platform_common.ConstraintValueInfo])
@@ -48,7 +48,7 @@ def _dart_binary_impl(ctx):
         runfiles = runfiles,
     )
 
-dart_binary = rule(
+dart_vm_binary = rule(
     implementation = _dart_binary_impl,
     executable = True,
     toolchains = ["@dev_bivens_rules_dart//dart:toolchain_type"],
@@ -75,8 +75,8 @@ dart_binary = rule(
 For Dart documentation, see https://dart.dev.
 Example:
 ```starlark
-load("@dev_bivens_rules_dart//dart:defs.bzl", "dart_binary")
-dart_binary(
+load("@dev_bivens_rules_dart//dart:defs.bzl", "dart_vm_binary")
+dart_vm_binary(
   name = "example",
   main = "main.dart",
   enable_asserts = True,

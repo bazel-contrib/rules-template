@@ -1,5 +1,5 @@
 "Public API re-exports"
 
-load("//dart/private:binary.bzl", _dart_binary = "dart_binary")
+load("//dart/private:vm_binary.bzl", _dart_vm_binary = "dart_vm_binary")
 
-dart_binary = _dart_binary
+dart_vm_binary = _dart_vm_binary

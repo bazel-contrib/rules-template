@@ -1,7 +1,7 @@
-load("@dev_bivens_rules_dart//dart:defs.bzl", "dart_binary")
+load("@dev_bivens_rules_dart//dart:defs.bzl", "dart_vm_binary")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 
-dart_binary(
+dart_vm_binary(
     name = "example_binary",
     main = "example.dart",
 )

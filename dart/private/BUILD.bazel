@@ -13,7 +13,7 @@ bzl_library(
 )
 
 bzl_library(
-    name = "binary",
-    srcs = ["binary.bzl"],
+    name = "vm_binary",
+    srcs = ["vm_binary.bzl"],
     visibility = ["//dart:__subpackages__"],
 )
