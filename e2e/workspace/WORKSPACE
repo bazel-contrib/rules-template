@@ -14,5 +14,11 @@ local_repository(
 # you should fetch it *before* calling this.
 # Alternatively, you can skip calling this function, so long as you've
 # already fetched all the dependencies.
-load("@dev_bivens_rules_dart//dart:repositories.bzl", "rules_dart_dependencies")
+load("@dev_bivens_rules_dart//dart:repositories.bzl", "dart_register_toolchains", "rules_dart_dependencies")
+
 rules_dart_dependencies()
+
+dart_register_toolchains(
+    name = "dart",
+    dart_version = "2.18.2",
+)

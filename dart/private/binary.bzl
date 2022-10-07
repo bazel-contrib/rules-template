@@ -18,7 +18,7 @@ def _dart_binary_impl(ctx):
 
     # Get Dart executable and build flags to include in launcher
     dart = ctx.toolchains["@dev_bivens_rules_dart//dart:toolchain_type"]
-    flags = _build_dart_flags(disable_analytics = ctx.attr.disable_analytics)
+    flags = _build_dart_flags(enable_asserts = ctx.attr.enable_asserts)
     runtime_args = leftover_args
 
     # Set DART_DIR within build bin
@@ -63,9 +63,9 @@ dart_binary = rule(
             allow_files = True,
             doc = "Additional local files that will be imported.",
         ),
-        "disable_analytics": attr.bool(
+        "enable_asserts": attr.bool(
             default = False,
-            doc = "Whether to prevent Dart from reporting on basic usage data",
+            doc = "Enable assert statements.",
         ),
         "_windows_constraint": attr.label(
             default = "@platforms//os:windows",
@@ -79,7 +79,7 @@ load("@dev_bivens_rules_dart//dart:defs.bzl", "dart_binary")
 dart_binary(
   name = "example",
   main = "main.dart",
-  disable_analytics = True,
+  enable_asserts = True,
   deps = [
       "helper.dart",
       ":dart_utils",
@@ -89,8 +89,8 @@ dart_binary(
 """,
 )
 
-def _build_dart_flags(disable_analytics):
+def _build_dart_flags(enable_asserts):
     flags = []
-    flags.append("--define=EXAMPLE_VAR=HELLO_WORLD")
-    if disable_analytics:
-        flags.append("--disable_analytics")
+    if enable_asserts:
+        flags.append("--enable_asserts")
+    return " ".join(flags)
