@@ -3,7 +3,7 @@ Add a basic smoke-test target below.
 """
 
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
-# load("dev_bivens_rules_dart//mylang:defs.bzl", "...")
+# load("dev_bivens_rules_dart//dart:defs.bzl", "...")
 
 # Replace with a usage of your rule/macro
 filegroup(name = "empty")

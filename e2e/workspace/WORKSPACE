@@ -7,12 +7,12 @@ local_repository(
 #---SNIP--- Below here is re-used in the workspace snippet published on releases
 
 ######################
-# rules_mylang setup #
+# rules_dart setup #
 ######################
-# Fetches the rules_mylang dependencies.
+# Fetches the rules_dart dependencies.
 # If you want to have a different version of some dependency,
 # you should fetch it *before* calling this.
 # Alternatively, you can skip calling this function, so long as you've
 # already fetched all the dependencies.
-load("@dev_bivens_rules_dart//mylang:repositories.bzl", "rules_mylang_dependencies")
-rules_mylang_dependencies()
+load("@dev_bivens_rules_dart//dart:repositories.bzl", "rules_dart_dependencies")
+rules_dart_dependencies()
