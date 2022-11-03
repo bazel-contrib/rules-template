@@ -1,5 +1,5 @@
 """Unit tests for starlark helpers
-See https://docs.bazel.build/versions/main/skylark/testing.html#for-testing-starlark-utilities
+See https://bazel.build/rules/testing#testing-starlark-utilities
 """
 
 load("@bazel_skylib//lib:unittest.bzl", "asserts", "unittest")
