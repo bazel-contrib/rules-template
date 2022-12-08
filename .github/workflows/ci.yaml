@@ -17,10 +17,8 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-  # matrix-prep-* steps dynamically generate a bit of JSON depending on whether our action has
-  # access to repository secrets. When running on a pull_request from a fork, the author is
-  # untrusted so the secret will be absent. Insanely complex for how simple this requirement is...
-  # inspired from
+  # matrix-prep-* steps generate JSON used to create a dynamic actions matrix.
+  # Insanely complex for how simple this requirement is inspired from
   # https://stackoverflow.com/questions/65384420/how-to-make-a-github-action-matrix-element-conditional
 
   matrix-prep-bazelversion:
@@ -28,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - id: bazel_6
+      - id: bazel_from_bazelversion
         run: echo "bazelversion=$(head -n 1 .bazelversion)" >> $GITHUB_OUTPUT
       - id: bazel_5
         run: echo "bazelversion=5.3.2" >> $GITHUB_OUTPUT
