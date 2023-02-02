@@ -19,7 +19,7 @@ http_archive(
     name = "com_myorg_rules_mylang",
     sha256 = "${SHA}",
     strip_prefix = "${PREFIX}",
-    url = "https://github.com/myorg/rules_mylang/releases/download/${TAG}/rules_mylang-${TAG}.tar.gz",
+    url = "https://github.com/myorg/rules_mylang/releases/download/${TAG}/${ARCHIVE}",
 )
 EOF
 
