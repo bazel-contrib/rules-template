@@ -1,5 +1,5 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
-load("@mylang1_14_toolchains//:defs.bzl", "resolved_toolchain")
+load("//mylang/private:resolved_toolchain.bzl", "resolved_toolchain")
 
 # For stardoc to reference the files
 exports_files(["defs.bzl"])
