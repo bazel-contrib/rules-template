@@ -114,7 +114,7 @@ jobs:
       - name: ./test.sh
         # Run if there is a test.sh file in the folder
         if: steps.has_test_sh.outputs.files_exists == 'true'
-        working-directory: ${{ matrix.folder }}        
+        working-directory: ${{ matrix.folder }}
         shell: bash
         # Run the script potentially setting BZLMOD_FLAG=--enable_bzlmod. All test.sh
         # scripts that run bazel directly should make use of this variable.
