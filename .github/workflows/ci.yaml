@@ -12,9 +12,9 @@ on:
   workflow_dispatch:
 
 concurrency:
-    # Cancel previous actions from the same PR: https://stackoverflow.com/a/72408109
-    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-    cancel-in-progress: true
+  # Cancel previous actions from the same PR: https://stackoverflow.com/a/72408109
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   # matrix-prep-* steps generate JSON used to create a dynamic actions matrix.
@@ -86,7 +86,7 @@ jobs:
         id: has_test_sh
         uses: andstor/file-existence-action@v2
         with:
-            files: '${{ matrix.folder }}/test.sh'
+          files: "${{ matrix.folder }}/test.sh"
 
       - name: bazel test //...
         env:
