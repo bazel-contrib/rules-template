@@ -5,11 +5,12 @@ Copy this template to create a Bazel ruleset.
 Features:
 
 - follows the official style guide at https://docs.bazel.build/versions/main/skylark/deploying.html
+- allows for both WORKSPACE.bazel and bzlmod (MODULE.bazel) usage
 - includes Bazel formatting as a pre-commit hook (using [buildifier])
 - includes stardoc API documentation generator
 - includes typical toolchain setup
 - CI configured with GitHub Actions
-- Release on GitHub Actions when pushing a tag
+- Release using GitHub Actions just by pushing a tag
 
 See https://docs.bazel.build/versions/main/skylark/deploying.html#readme
 
