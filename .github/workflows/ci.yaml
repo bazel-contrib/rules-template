@@ -21,6 +21,25 @@ jobs:
   # Insanely complex for how simple this requirement is inspired from
   # https://stackoverflow.com/questions/65384420/how-to-make-a-github-action-matrix-element-conditional
 
+  matrix-prep-os:
+    # Prepares the 'os' axis of the test matrix, to reduce costs since GitHub hosted runners cost more on some platforms.
+    # https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#included-storage-and-minutes
+    runs-on: ubuntu-latest
+    steps:
+      - id: linux
+        run: echo "os=ubuntu-latest" >> $GITHUB_OUTPUT
+      - id: windows
+        run: echo "os=windows-latest" >> $GITHUB_OUTPUT
+        # Only run on main branch (or PR branches that contain 'windows') to minimize Windows minutes (billed at 2X)
+        if: github.ref == 'refs/heads/main' || contains(github.head_ref, 'windows')
+      - id: macos
+        run: echo "os=macos-latest" >> $GITHUB_OUTPUT
+        # Only run on main branch (or PR branches that contain 'macos') to minimize macOS minutes (billed at 10X)
+        if: github.ref == 'refs/heads/main' || contains(github.head_ref, 'macos')
+    outputs:
+      # Will look like ["ubuntu-latest", "windows-latest", "macos-latest"]
+      os: ${{ toJSON(steps.*.outputs.os) }}
+
   matrix-prep-bazelversion:
     # Prepares the 'bazelversion' axis of the test matrix
     runs-on: ubuntu-latest
@@ -40,12 +59,13 @@ jobs:
 
     needs:
       - matrix-prep-bazelversion
+      - matrix-prep-os
 
     # Run bazel test in each workspace with each version of Bazel supported
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: ${{ fromJSON(needs.matrix-prep-os.outputs.os) }}
         bazelversion: ${{ fromJSON(needs.matrix-prep-bazelversion.outputs.bazelversions) }}
         bzlmodEnabled: [true, false]
         folder:
@@ -109,11 +129,12 @@ jobs:
           # Bazelisk will download bazel to here, ensure it is cached between runs.
           XDG_CACHE_HOME: ~/.cache/bazel-repo
         working-directory: ${{ matrix.folder }}
-        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc --bazelrc=.bazelrc test ${{ steps.set_bzlmod_flag.outputs.bzlmod_flag }} //...
+        run: bazel --bazelrc=${{ github.workspace }}/.github/workflows/ci.bazelrc --bazelrc=.bazelrc test ${{ steps.set_bzlmod_flag.outputs.bzlmod_flag }} //...
 
       - name: ./test.sh
         # Run if there is a test.sh file in the folder
-        if: steps.has_test_sh.outputs.files_exists == 'true'
+        # Don't run integration tests on Windows since they are bash scripts and Windows runs Powershell
+        if: steps.has_test_sh.outputs.files_exists == 'true' && ! startsWith(matrix.os, 'windows')
         working-directory: ${{ matrix.folder }}
         shell: bash
         # Run the script potentially setting BZLMOD_FLAG=--enable_bzlmod. All test.sh
