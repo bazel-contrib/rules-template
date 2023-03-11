@@ -22,7 +22,8 @@ jobs:
   # https://stackoverflow.com/questions/65384420/how-to-make-a-github-action-matrix-element-conditional
 
   matrix-prep-os:
-    # Prepares the 'os' axis of the test matrix
+    # Prepares the 'os' axis of the test matrix, to reduce costs since GitHub hosted runners cost more on some platforms.
+    # https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#included-storage-and-minutes
     runs-on: ubuntu-latest
     steps:
       - id: linux
@@ -30,13 +31,11 @@ jobs:
       - id: windows
         run: echo "os=windows-latest" >> $GITHUB_OUTPUT
         # Only run on main branch (or PR branches that contain 'windows') to minimize Windows minutes (billed at 2X)
-        # https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#included-storage-and-minutes
-        if: ${{ github.ref == 'refs/heads/main' || contains(github.head_ref, 'windows') }}
+        if: github.ref == 'refs/heads/main' || contains(github.head_ref, 'windows')
       - id: macos
         run: echo "os=macos-latest" >> $GITHUB_OUTPUT
         # Only run on main branch (or PR branches that contain 'macos') to minimize macOS minutes (billed at 10X)
-        # https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#included-storage-and-minutes
-        if: ${{ github.ref == 'refs/heads/main' || contains(github.head_ref, 'macos') }}
+        if: github.ref == 'refs/heads/main' || contains(github.head_ref, 'macos')
     outputs:
       # Will look like ["ubuntu-latest", "windows-latest", "macos-latest"]
       os: ${{ toJSON(steps.*.outputs.os) }}
@@ -135,7 +134,7 @@ jobs:
       - name: ./test.sh
         # Run if there is a test.sh file in the folder
         # Don't run integration tests on Windows since they are bash scripts and Windows runs Powershell
-        if: steps.has_test_sh.outputs.files_exists == 'true' && ! startsWith(${{ matrix.os }}, 'windows')
+        if: steps.has_test_sh.outputs.files_exists == 'true' && ! startsWith(matrix.os, 'windows')
         working-directory: ${{ matrix.folder }}
         shell: bash
         # Run the script potentially setting BZLMOD_FLAG=--enable_bzlmod. All test.sh
