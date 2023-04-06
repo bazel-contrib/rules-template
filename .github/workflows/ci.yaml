@@ -7,7 +7,6 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -17,126 +16,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # matrix-prep-* steps generate JSON used to create a dynamic actions matrix.
-  # Insanely complex for how simple this requirement is inspired from
-  # https://stackoverflow.com/questions/65384420/how-to-make-a-github-action-matrix-element-conditional
-
-  matrix-prep-os:
-    # Prepares the 'os' axis of the test matrix, to reduce costs since GitHub hosted runners cost more on some platforms.
-    # https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#included-storage-and-minutes
-    runs-on: ubuntu-latest
-    steps:
-      - id: linux
-        run: echo "os=ubuntu-latest" >> $GITHUB_OUTPUT
-      - id: windows
-        run: echo "os=windows-latest" >> $GITHUB_OUTPUT
-        # Only run on main branch (or PR branches that contain 'windows') to minimize Windows minutes (billed at 2X)
-        if: github.ref == 'refs/heads/main' || contains(github.head_ref, 'windows')
-      - id: macos
-        run: echo "os=macos-latest" >> $GITHUB_OUTPUT
-        # Only run on main branch (or PR branches that contain 'macos') to minimize macOS minutes (billed at 10X)
-        if: github.ref == 'refs/heads/main' || contains(github.head_ref, 'macos')
-    outputs:
-      # Will look like ["ubuntu-latest", "windows-latest", "macos-latest"]
-      os: ${{ toJSON(steps.*.outputs.os) }}
-
-  matrix-prep-bazelversion:
-    # Prepares the 'bazelversion' axis of the test matrix
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - id: bazel_from_bazelversion
-        run: echo "bazelversion=$(head -n 1 .bazelversion)" >> $GITHUB_OUTPUT
-      - id: bazel_5
-        run: echo "bazelversion=5.3.2" >> $GITHUB_OUTPUT
-    outputs:
-      # Will look like ["<version from .bazelversion>", "5.3.2"]
-      bazelversions: ${{ toJSON(steps.*.outputs.bazelversion) }}
-
   test:
-    # The type of runner that the job will run on
-    runs-on: ${{ matrix.os }}
+    uses: bazel-contrib/.github/.github/workflows/bazel.yaml@v1
+    with:
+      folders: '[".", "e2e/smoke"]'
 
-    needs:
-      - matrix-prep-bazelversion
-      - matrix-prep-os
-
-    # Run bazel test in each workspace with each version of Bazel supported
-    strategy:
-      fail-fast: false
-      matrix:
-        os: ${{ fromJSON(needs.matrix-prep-os.outputs.os) }}
-        bazelversion: ${{ fromJSON(needs.matrix-prep-bazelversion.outputs.bazelversions) }}
-        bzlmodEnabled: [true, false]
-        folder:
-          - "."
-          - "e2e/smoke"
-        exclude:
-          # Don't test bzlmod with Bazel 5 (not supported)
-          - bazelversion: 5.3.2
-            bzlmodEnabled: true
-          # Broken due to stardoc usage, see
-          # https://github.com/bazelbuild/stardoc/issues/117#issuecomment-1380744704
-          - folder: .
-            bzlmodEnabled: true
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      # Cache build and external artifacts so that the next ci build is incremental.
-      # Because github action caches cannot be updated after a build, we need to
-      # store the contents of each build in a unique cache key, then fall back to loading
-      # it on the next ci run. We use hashFiles(...) in the key and restore-keys- with
-      # the prefix to load the most recent cache for the branch on a cache miss. You
-      # should customize the contents of hashFiles to capture any bazel input sources,
-      # although this doesn't need to be perfect. If none of the input sources change
-      # then a cache hit will load an existing cache and bazel won't have to do any work.
-      # In the case of a cache miss, you want the fallback cache to contain most of the
-      # previously built artifacts to minimize build time. The more precise you are with
-      # hashFiles sources the less work bazel will have to do.
-      - name: Mount bazel caches
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/bazel
-            ~/.cache/bazel-repo
-          key: bazel-cache-${{ hashFiles('**/BUILD.bazel', '**/*.bzl', 'WORKSPACE') }}
-          restore-keys: bazel-cache-
-
-      - name: Configure Bazel version
-        working-directory: ${{ matrix.folder }}
-        run: echo "${{ matrix.bazelversion }}" > .bazelversion
-
-      - name: Check for test.sh
-        # Checks for the existence of test.sh in the folder. Downstream steps can use
-        # steps.has_test_sh.outputs.files_exists as a conditional.
-        id: has_test_sh
-        uses: andstor/file-existence-action@v2
-        with:
-          files: "${{ matrix.folder }}/test.sh"
-
-      - name: Set bzlmod flag
-        # Store the --enable_bzlmod flag that we add to the test command below
-        # only when we're running bzlmod in our test matrix.
-        id: set_bzlmod_flag
-        if: matrix.bzlmodEnabled
-        run: echo "bzlmod_flag=--enable_bzlmod" >> $GITHUB_OUTPUT
-
-      - name: bazel test //...
-        env:
-          # Bazelisk will download bazel to here, ensure it is cached between runs.
-          XDG_CACHE_HOME: ~/.cache/bazel-repo
-        working-directory: ${{ matrix.folder }}
-        run: bazel --bazelrc=${{ github.workspace }}/.github/workflows/ci.bazelrc --bazelrc=.bazelrc test ${{ steps.set_bzlmod_flag.outputs.bzlmod_flag }} //...
-
-      - name: ./test.sh
-        # Run if there is a test.sh file in the folder
-        # Don't run integration tests on Windows since they are bash scripts and Windows runs Powershell
-        if: steps.has_test_sh.outputs.files_exists == 'true' && ! startsWith(matrix.os, 'windows')
-        working-directory: ${{ matrix.folder }}
-        shell: bash
-        # Run the script potentially setting BZLMOD_FLAG=--enable_bzlmod. All test.sh
-        # scripts that run bazel directly should make use of this variable.
-        run: BZLMOD_FLAG=${{ steps.set_bzlmod_flag.outputs.bzlmod_flag }} ./test.sh
