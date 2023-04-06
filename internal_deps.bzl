@@ -35,6 +35,12 @@ def rules_mylang_internal_deps():
     )
 
     http_archive(
+        name = "bazel_skylib_gazelle_plugin",
+        sha256 = "0a466b61f331585f06ecdbbf2480b9edf70e067a53f261e0596acd573a7d2dc3",
+        urls = ["https://github.com/bazelbuild/bazel-skylib/releases/download/1.4.1/bazel-skylib-gazelle-plugin-1.4.1.tar.gz"],
+    )
+
+    http_archive(
         name = "io_bazel_stardoc",
         sha256 = "3fd8fec4ddec3c670bd810904e2e33170bedfe12f90adf943508184be458c8bb",
         urls = ["https://github.com/bazelbuild/stardoc/releases/download/0.5.3/stardoc-0.5.3.tar.gz"],
@@ -42,7 +48,7 @@ def rules_mylang_internal_deps():
 
     http_archive(
         name = "aspect_bazel_lib",
-        sha256 = "0aed9a6e7612b2968b5aa1ac0f801f5ec956ec2c04810da2c1445cac34938596",
-        strip_prefix = "bazel-lib-1.29.0",
-        url = "https://github.com/aspect-build/bazel-lib/archive/refs/tags/v1.29.0.tar.gz",
+        sha256 = "97fa63d95cc9af006c4c7b2123ddd2a91fb8d273012f17648e6423bae2c69470",
+        strip_prefix = "bazel-lib-1.30.2",
+        url = "https://github.com/aspect-build/bazel-lib/releases/download/v1.30.2/bazel-lib-v1.30.2.tar.gz",
     )
