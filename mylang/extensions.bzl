@@ -37,11 +37,12 @@ def _toolchain_extension(module_ctx):
     for name, versions in registrations.items():
         if len(versions) > 1:
             # TODO: should be semver-aware, using MVS
-            selected = sorted(versions, reverse=True)[0]
+            selected = sorted(versions, reverse = True)[0]
+
             # buildifier: disable=print
             print("NOTE: mylang toolchain {} has multiple versions {}, selected {}".format(name, versions, selected))
         else:
-            selected = versions[0]            
+            selected = versions[0]
 
         mylang_register_toolchains(
             name = name,
