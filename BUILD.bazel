@@ -8,6 +8,7 @@ buildifier(
     ],
     lint_mode = "warn",
     mode = "diff",
+    tags = ["manual"],
 )
 
 gazelle_binary(
