@@ -1,0 +1,10 @@
+name: Build
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    - uses: actions/checkout@v3
+    - uses: bazelbuild/setup-bazelisk@v2
+    - run: bazel build //... --bazelrc=${{ github.workspace }}/.github/workflows/ci.bazelrc --bazelrc=.bazelrc
