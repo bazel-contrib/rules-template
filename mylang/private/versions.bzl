@@ -2,8 +2,8 @@
 
 TODO: generate this file from GitHub API"""
 
-# The integrity hashes can be computed with
-# shasum -b -a 384 [downloaded file] | awk '{ print $1 }' | xxd -r -p | base64
+# The integrity hashes of a URL can be computed with
+# curl -nsL <url> | shasum -b -a 256 | awk '{ print $1 }'
 TOOL_VERSIONS = {
     "1.14.2": {
         "x86_64-apple-darwin": "sha384-ws4+rANvv0YxM1SgIBUXSG9jT8dKw83nls6R5qYkEKzPUB+viBIEozSsyq2e6i+f",
