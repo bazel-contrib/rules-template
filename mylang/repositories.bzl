@@ -40,9 +40,11 @@ _ATTRS = {
 }
 
 def _mylang_repo_impl(repository_ctx):
-    url = "https://github.com/someorg/someproject/releases/download/v{0}/mylang-{1}.zip".format(
+    archive_extension = "zip" if "windows" in repository_ctx.attr.platform else "tar.gz"
+    url = "https://github.com/someorg/someproject/releases/download/v{0}/mylang-{1}.{2}".format(
         repository_ctx.attr.mylang_version,
         repository_ctx.attr.platform,
+        archive_extension,
     )
     repository_ctx.download_and_extract(
         url = url,
