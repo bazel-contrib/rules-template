@@ -9,4 +9,3 @@ gazelle(
     name = "gazelle",
     gazelle = "gazelle_bin",
 )
-
