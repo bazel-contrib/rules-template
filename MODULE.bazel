@@ -1,11 +1,8 @@
 "Bazel dependencies"
 
-# replaced by export-subst during 'git archive'
-VERSION = "$Format:%(describe:tags=true)$"
-
 module(
     name = "com_myorg_rules_mylang",
-    version = "0.0.0" if VERSION.startswith("$Format") else VERSION,
+    version = "0.0.0",
     compatibility_level = 1,
 )
 
