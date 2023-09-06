@@ -5,7 +5,7 @@ VERSION = "$Format:%(describe:tags=true)$"
 
 module(
     name = "com_myorg_rules_mylang",
-    version = "0.0.0" if VERSION.startswith("$Format") else VERSION.replace("v", "", 1),
+    version = "0.0.0" if VERSION.startswith("$Format") else VERSION,
     compatibility_level = 1,
 )
 
