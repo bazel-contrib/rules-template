@@ -2,19 +2,16 @@
 
 set -o errexit -o nounset -o pipefail
 
-# Don't include examples in the distribution artifact, to reduce size.
-# You may want to add additional exclusions for folders or files that users don't need.
-# NB: this mechanism relies on a `git archive` feature, which is much simpler and less
-# error-prone than using Bazel to build a release artifact from sources in the repository.
-# See https://git-scm.com/docs/git-archive#ATTRIBUTES
-echo >>.git/info/attributes "examples export-ignore"
-
 # Set by GH actions, see
 # https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
 TAG=${GITHUB_REF_NAME}
 # The prefix is chosen to match what GitHub generates for source archives
+# This guarantees that users can easily switch from a released artifact to a source archive
+# with minimal differences in their code (e.g. strip_prefix remains the same)
 PREFIX="rules_mylang-${TAG:1}"
 ARCHIVE="rules_mylang-$TAG.tar.gz"
+
+# NB: configuration for 'git archive' is in /.gitattributes
 git archive --format=tar --prefix=${PREFIX}/ ${TAG} | gzip > $ARCHIVE
 SHA=$(shasum -a 256 $ARCHIVE | awk '{print $1}')
 
