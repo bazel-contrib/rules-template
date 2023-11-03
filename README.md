@@ -10,7 +10,8 @@ Features:
 - includes stardoc API documentation generator
 - includes typical toolchain setup
 - CI configured with GitHub Actions
-- Release using GitHub Actions just by pushing a tag
+- release using GitHub Actions just by pushing a tag
+- the release artifact doesn't need to be built by Bazel, but can still exclude files and stamp the version
 
 See https://docs.bazel.build/versions/main/skylark/deploying.html#readme
 
