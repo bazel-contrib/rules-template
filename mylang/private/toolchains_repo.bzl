@@ -67,7 +67,6 @@ toolchain(
 )
 """.format(
             platform = platform,
-            name = repository_ctx.attr.name,
             user_repository_name = repository_ctx.attr.user_repository_name,
             compatible_with = meta.compatible_with,
         )
