@@ -73,8 +73,7 @@ mylang_repositories = repository_rule(
 def mylang_register_toolchains(name, register = True, **kwargs):
     """Convenience macro for users which does typical setup.
 
-    - create a repository for each built-in platform like "mylang_linux_amd64" -
-      this repository is lazily fetched when node is needed for that platform.
+    - create a repository for each built-in platform like "mylang_linux_amd64"
     - TODO: create a convenience repository for the host platform like "mylang_host"
     - create a repository exposing toolchains for each platform like "mylang_platforms"
     - register a toolchain pointing at each platform
@@ -83,7 +82,7 @@ def mylang_register_toolchains(name, register = True, **kwargs):
         name: base name for all created repos, like "mylang1_14"
         register: whether to call through to native.register_toolchains.
             Should be True for WORKSPACE users, but false when used under bzlmod extension
-        **kwargs: passed to each node_repositories call
+        **kwargs: passed to each mylang_repositories call
     """
     for platform in PLATFORMS.keys():
         mylang_repositories(
