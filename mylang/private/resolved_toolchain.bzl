@@ -22,6 +22,5 @@ def _resolved_toolchain_impl(ctx):
 resolved_toolchain = rule(
     implementation = _resolved_toolchain_impl,
     toolchains = ["//mylang:toolchain_type"],
-    incompatible_use_toolchain_transition = True,
     doc = DOC,
 )
