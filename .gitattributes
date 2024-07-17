@@ -10,4 +10,5 @@ docs/*.md linguist-generated=true
 examples export-ignore
 
 # Occasionally there's a need to "stamp" the release version into a file
-mylang/version.bzl export-subst
+# See https://blog.aspect.build/releasing-bazel-rulesets-rust for details if you need this.
+# mylang/version.bzl export-subst
