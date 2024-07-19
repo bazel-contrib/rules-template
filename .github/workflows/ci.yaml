@@ -38,10 +38,14 @@ jobs:
     steps:
       - uses: technote-space/workflow-conclusion-action@45ce8e0eb155657ab8ccf346ade734257fd196a5 # v3.0.3
 
-      - if: ${{ env.WORKFLOW_CONCLUSION == 'success' }}
+      # Note: possible conclusion values:
+      # https://github.com/technote-space/workflow-conclusion-action/blob/main/src/constant.ts
+      - name: report success
+        if: ${{ env.WORKFLOW_CONCLUSION == 'success' }}
         working-directory: /tmp
         run: echo ${{ env.WORKFLOW_CONCLUSION }} && exit 0
 
-      - if: ${{ env.WORKFLOW_CONCLUSION == 'failure' }}
+      - name: report failure
+        if: ${{ env.WORKFLOW_CONCLUSION == 'failure' }}
         working-directory: /tmp
         run: echo ${{ env.WORKFLOW_CONCLUSION }} && exit 1
