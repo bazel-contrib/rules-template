@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   release:
-    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@d197a6427c5435ac22e56e33340dff912bc9334e # 20 Nov 2024
+    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@c9d6d1893b10a8d68584a6ba52c3dd35506486d0 # 2024-12-03
     with:
       release_files: rules_mylang-*.tar.gz
       tag_name: ${{ inputs.tag_name }}
