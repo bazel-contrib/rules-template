@@ -32,7 +32,7 @@ jobs:
           fetch-depth: 0
       - name: Bump tag if necessary
         id: ccv
-        uses: smlx/ccv@7318e2f25a52dcd550e75384b84983973251a1f8 # 4 Dec 2024
+        uses: smlx/ccv@7318e2f25a52dcd550e75384b84983973251a1f8 # v0.10.0
   release:
     needs: tag
     uses: ./.github/workflows/release.yml
