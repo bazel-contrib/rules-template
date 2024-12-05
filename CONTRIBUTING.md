@@ -45,9 +45,12 @@ This means that any usage of `@rules_mylang` on your system will point to this f
 ## Releasing
 
 Releases are automated on a cron trigger.
-If you do nothing, eventually the newest commits will be released automatically. See .github/workflows/tag.yaml.
+The new version is determined automatically from the commit history, assuming the commit messages follow conventions, using
+https://github.com/marketplace/actions/conventional-commits-versioner-action.
+If you do nothing, eventually the newest commits will be released automatically as a patch or minor release.
+This automation is defined in .github/workflows/tag.yaml.
 
-To trigger a release where the new version can be determined automatically from the commit history, just navigate to
+Rather than wait for the cron event, you can trigger manually. Navigate to
 https://github.com/myorg/rules_mylang/actions/workflows/tag.yaml
 and press the "Run workflow" button.
 
