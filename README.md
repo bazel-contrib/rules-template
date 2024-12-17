@@ -28,7 +28,7 @@ Optional: if you write tools for your rules to call, you should avoid toolchain 
 For example, https://github.com/aspect-build/rules_py actions rely on a couple of binaries written in Rust, but we don't want users to be forced to
 fetch a working Rust toolchain. Instead we want to ship pre-built binaries on our GH releases, and the ruleset fetches these as toolchains.
 See https://blog.aspect.build/releasing-bazel-rulesets-rust for information on how to do this.
-Note that users who *do* want to build tools from source should still be able to do so, they just need to register a different toolchain earlier.
+Note that users who _do_ want to build tools from source should still be able to do so, they just need to register a different toolchain earlier.
 
 ---- SNIP ----
 

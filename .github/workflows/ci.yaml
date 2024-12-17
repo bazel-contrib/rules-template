@@ -11,10 +11,10 @@ on:
   workflow_dispatch:
 
 concurrency:
-    # Cancel previous actions from the same PR or branch except 'main' branch.
-    # See https://docs.github.com/en/actions/using-jobs/using-concurrency and https://docs.github.com/en/actions/learn-github-actions/contexts for more info.
-    group: concurrency-group::${{ github.workflow }}::${{ github.event.pull_request.number > 0 && format('pr-{0}', github.event.pull_request.number) || github.ref_name }}${{ github.ref_name == 'main' && format('::{0}', github.run_id) || ''}}
-    cancel-in-progress: ${{ github.ref_name != 'main' }}
+  # Cancel previous actions from the same PR or branch except 'main' branch.
+  # See https://docs.github.com/en/actions/using-jobs/using-concurrency and https://docs.github.com/en/actions/learn-github-actions/contexts for more info.
+  group: concurrency-group::${{ github.workflow }}::${{ github.event.pull_request.number > 0 && format('pr-{0}', github.event.pull_request.number) || github.ref_name }}${{ github.ref_name == 'main' && format('::{0}', github.run_id) || ''}}
+  cancel-in-progress: ${{ github.ref_name != 'main' }}
 
 jobs:
   test:
@@ -29,10 +29,15 @@ jobs:
         [
           {"folder": ".", "bzlmodEnabled": false}
         ]
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pre-commit/action@v3.0.1
   # For branch protection settings, this job provides a "stable" name that can be used to gate PR merges
   # on "all matrix jobs were successful".
   conclusion:
-    needs: test
+    needs: [test, pre-commit]
     runs-on: ubuntu-latest
     if: always()
     steps:
