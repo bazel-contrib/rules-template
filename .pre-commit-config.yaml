@@ -5,13 +5,30 @@
 # Commitizen runs in commit-msg stage
 # but we don't want to run the other hooks on commit messages
 default_stages: [commit]
-
 # Use a slightly older version of node by default
 # as the default uses a very new version of GLIBC
 default_language_version:
   node: 16.18.0
-
 repos:
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      - id: check-toml
+      - id: check-yaml
+      - id: destroyed-symlinks
+      - id: detect-private-key
+      - id: end-of-file-fixer
+        exclude: |
+          (?x)^(
+            docs/
+          )
+      - id: trailing-whitespace
   # Check formatting and lint for starlark code
   - repo: https://github.com/keith/pre-commit-buildifier
     rev: 7.3.1.1
@@ -29,3 +46,15 @@ repos:
     rev: v3.1.0
     hooks:
       - id: prettier
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.14.0
+    hooks:
+      - id: yamlfmt
+        exclude: |
+          (?x)^(
+            .bcr/config.yml
+          )
+  - repo: https://github.com/crate-ci/typos
+    rev: v1.28.4
+    hooks:
+      - id: typos
