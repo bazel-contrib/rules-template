@@ -9,14 +9,12 @@ on:
   # Allow devs to tag manually through the GitHub UI.
   # For example after landing a fix that customers are waiting for.
   workflow_dispatch:
-
   # Run twice a month, on the 1rst and 15th at 3PM UTC (8AM PST)
   # This is a trade-off between making too many releases,
   # which overwhelms BCR maintainers and over-notifies users,
   # and releasing too infrequently which delays delivery of bugfixes and features.
   schedule:
     - cron: "0 15 1,15 * *"
-
 jobs:
   tag:
     permissions:
