@@ -15,10 +15,10 @@ on:
   # and releasing too infrequently which delays delivery of bugfixes and features.
   schedule:
     - cron: "0 15 1,15 * *"
-permissions:
-  contents: write
 jobs:
   tag:
+    permissions:
+      contents: write # allow create tag
     runs-on: ubuntu-latest
     outputs:
       new-tag: ${{ steps.ccv.outputs.new-tag }}
