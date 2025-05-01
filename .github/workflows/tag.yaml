@@ -15,10 +15,12 @@ on:
   # and releasing too infrequently which delays delivery of bugfixes and features.
   schedule:
     - cron: "0 15 1,15 * *"
+permissions:
+  id-token: write
+  attestations: write
+  contents: write
 jobs:
   tag:
-    permissions:
-      contents: write # allow create tag
     runs-on: ubuntu-latest
     outputs:
       new-tag: ${{ steps.ccv.outputs.new-tag }}
@@ -36,6 +38,8 @@ jobs:
     uses: ./.github/workflows/release.yml
     with:
       tag_name: ${{ needs.tag.outputs.new-tag-version }}
+    secrets:
+      publish_token: ${{ secrets.BCR_PUBLISH_TOKEN }}
     if: needs.tag.outputs.new-tag == 'true' && needs.tag.outputs.new-tag-version-type != 'major'
     permissions:
       contents: write # allow create release
