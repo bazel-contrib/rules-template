@@ -16,8 +16,6 @@ on:
   schedule:
     - cron: "0 15 1,15 * *"
 permissions:
-  id-token: write
-  attestations: write
   contents: write
 jobs:
   tag:
