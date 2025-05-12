@@ -7,6 +7,7 @@ module(
 )
 
 bazel_dep(name = "bazel_skylib", version = "1.4.1")
+bazel_dep(name = "package_metadata", version = "0.0.2")
 bazel_dep(name = "platforms", version = "0.0.5")
 
 bazel_dep(name = "gazelle", version = "0.35.0", dev_dependency = True, repo_name = "bazel_gazelle")

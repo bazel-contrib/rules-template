@@ -1,4 +1,11 @@
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@package_metadata//rules:package_metadata.bzl", "package_metadata")
+
+package_metadata(
+    name = "package_metadata",
+    purl = "pkg:bazel/{}@{}".format(module_name(), module_version()),
+    visibility = ["//visibility:public"],
+)
 
 gazelle_binary(
     name = "gazelle_bin",
