@@ -9,12 +9,8 @@ on:
   # Allow devs to tag manually through the GitHub UI.
   # For example after landing a fix that customers are waiting for.
   workflow_dispatch:
-  # Run twice a month, on the 1rst and 15th at 3PM UTC (8AM PST)
-  # This is a trade-off between making too many releases,
-  # which overwhelms BCR maintainers and over-notifies users,
-  # and releasing too infrequently which delays delivery of bugfixes and features.
   schedule:
-    - cron: "0 15 1,15 * *"
+    - cron: "0 15 * * *"
 jobs:
   tag:
     permissions:
@@ -28,6 +24,28 @@ jobs:
         with:
           # Need enough history to find the prior release tag
           fetch-depth: 0
+      - name: Check if there is a recent tag
+        id: recent-tag
+        # Only skip on cron trigger, not manual trigger
+        if: github.event_name == 'schedule'
+        run: |
+          MAX_AGE=1209600  # 2 weeks
+          # This is a trade-off between making too many releases,
+          # which overwhelms BCR maintainers and over-notifies users,
+          # and releasing too infrequently which delays delivery of bugfixes and features.
+          TAG=$(git describe --tags --match 'v[0-9]*.[0-9]*.[0-9]*' 2>/dev/null) || {
+            echo "No matching tag — continue workflow."
+            exit 0
+          }
+          TAG_TIME=$(git log -1 --format=%ct "$TAG")
+          NOW=$(date +%s)
+          AGE=$((NOW - TAG_TIME))
+  
+          echo "Latest tag: $TAG ($AGE seconds ago)"
+  
+          if [ "$AGE" -lt "$MAX_AGE" ]; then
+            echo "recently-tagged=true" >> "$GITHUB_OUTPUT"
+          fi
       - name: Bump tag if necessary
         id: ccv
         uses: smlx/ccv@7318e2f25a52dcd550e75384b84983973251a1f8 # v0.10.0
@@ -38,6 +56,6 @@ jobs:
       tag_name: ${{ needs.tag.outputs.new-tag-version }}
     secrets:
       publish_token: ${{ secrets.BCR_PUBLISH_TOKEN }}
-    if: needs.tag.outputs.new-tag == 'true' && needs.tag.outputs.new-tag-version-type != 'major'
+    if: needs.tag.outputs.new-tag == 'true' && needs.tag.outputs.new-tag-version-type != 'major' && needs.tag.outputs.recently-tagged != 'true'
     permissions:
       contents: write # allow create release
