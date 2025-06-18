@@ -19,6 +19,8 @@ jobs:
     outputs:
       new-tag: ${{ steps.ccv.outputs.new-tag }}
       new-tag-version: ${{steps.ccv.outputs.new-tag-version}}
+      new-tag-version-type: ${{steps.ccv.outputs.new-tag-version-type}}
+      recently-tagged: ${{steps.recent-tag.outputs.recently-tagged}}
     steps:
       - uses: actions/checkout@v4
         with:
