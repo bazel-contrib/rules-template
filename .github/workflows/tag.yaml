@@ -35,7 +35,7 @@ jobs:
           # which overwhelms BCR maintainers and over-notifies users,
           # and releasing too infrequently which delays delivery of bugfixes and features.
           MAX_AGE=1209600  # 2 weeks
-          TAG=$(git describe --tags --match 'v[0-9]*.[0-9]*.[0-9]*' 2>/dev/null) || {
+          TAG=$(git describe --tags --match 'v[0-9]*.[0-9]*.[0-9]*' --abbrev=0 2>/dev/null) || {
             echo "No matching tag — continue workflow."
             exit 0
           }
