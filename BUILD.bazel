@@ -5,7 +5,10 @@ load("@package_metadata//rules:package_metadata.bzl", "package_metadata")
 
 package_metadata(
     name = "package_metadata",
-    purl = purl.bazel(module_name(), module_version()),
+    purl = purl.bazel(
+        module_name(),
+        module_version(),
+    ),
     visibility = ["//visibility:public"],
 )
 
