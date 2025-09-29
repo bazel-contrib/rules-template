@@ -24,10 +24,6 @@ repos:
       - id: destroyed-symlinks
       - id: detect-private-key
       - id: end-of-file-fixer
-        exclude: |
-          (?x)^(
-            docs/
-          )
       - id: trailing-whitespace
   # Check formatting and lint for starlark code
   - repo: https://github.com/keith/pre-commit-buildifier
