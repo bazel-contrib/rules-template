@@ -18,9 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       new-tag: ${{ steps.ccv.outputs.new-tag }}
-      new-tag-version: ${{steps.ccv.outputs.new-tag-version}}
-      new-tag-version-type: ${{steps.ccv.outputs.new-tag-version-type}}
-      recently-tagged: ${{steps.recent-tag.outputs.recently-tagged}}
+      new-tag-version: ${{ steps.ccv.outputs.new-tag-version }}
+      new-tag-version-type: ${{ steps.ccv.outputs.new-tag-version-type }}
+      recently-tagged: ${{ steps.recent-tag.outputs.recently-tagged }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -48,15 +48,16 @@ jobs:
           fi
       - name: Bump tag if necessary
         id: ccv
-        uses: smlx/ccv@7318e2f25a52dcd550e75384b84983973251a1f8 # v0.10.0
+        if: github.event_name != 'schedule' || steps.recent-tag.outputs.recently-tagged != 'true'
+        uses: smlx/ccv@v0.10.0
   release:
     needs: tag
-    uses: ./.github/workflows/release.yml
+    uses: ./.github/workflows/release.yaml
     with:
       tag_name: ${{ needs.tag.outputs.new-tag-version }}
     secrets:
       publish_token: ${{ secrets.BCR_PUBLISH_TOKEN }}
-    if: needs.tag.outputs.new-tag == 'true' && needs.tag.outputs.new-tag-version-type != 'major' && needs.tag.outputs.recently-tagged != 'true'
+    if: needs.tag.outputs.new-tag == 'true' && needs.tag.outputs.new-tag-version-type != 'major'
     permissions:
       contents: write
       id-token: write
