@@ -7,7 +7,7 @@ Features:
 - follows the official style guide at https://bazel.build/rules/deploying
 - allows for both WORKSPACE.bazel and bzlmod (MODULE.bazel) usage
 - includes Bazel formatting as a pre-commit hook (using [buildifier])
-- includes stardoc API documentation generator
+- includes API documentation generation
 - includes typical toolchain setup
 - CI configured with GitHub Actions
 - release using GitHub Actions just by pushing a tag
