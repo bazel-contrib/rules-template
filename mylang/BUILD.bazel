@@ -1,8 +1,5 @@
-load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@bazel_lib//:bzl_library.bzl", "bzl_library")
 load("//mylang/private:resolved_toolchain.bzl", "resolved_toolchain")
-
-# For stardoc to reference the files
-exports_files(["defs.bzl"])
 
 # This is the target rule authors should put in their "toolchains"
 # attribute in order to get a runtime for the correct platform.
@@ -27,6 +24,7 @@ bzl_library(
     deps = [
         "//mylang/private:toolchains_repo",
         "//mylang/private:versions",
+        "@bazel_tools//tools/build_defs/repo:cache.bzl",
         "@bazel_tools//tools/build_defs/repo:http.bzl",
         "@bazel_tools//tools/build_defs/repo:utils.bzl",
     ],
@@ -42,7 +40,10 @@ bzl_library(
     name = "extensions",
     srcs = ["extensions.bzl"],
     visibility = ["//visibility:public"],
-    deps = [":repositories"],
+    deps = [
+        ":repositories",
+        "@bazel_tools//tools/build_defs/repo:cache.bzl",
+    ],
 )
 
 bzl_library(
