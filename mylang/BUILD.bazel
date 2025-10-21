@@ -27,6 +27,7 @@ bzl_library(
     deps = [
         "//mylang/private:toolchains_repo",
         "//mylang/private:versions",
+        "@bazel_tools//tools/build_defs/repo:cache.bzl",
         "@bazel_tools//tools/build_defs/repo:http.bzl",
         "@bazel_tools//tools/build_defs/repo:utils.bzl",
     ],
@@ -42,7 +43,10 @@ bzl_library(
     name = "extensions",
     srcs = ["extensions.bzl"],
     visibility = ["//visibility:public"],
-    deps = [":repositories"],
+    deps = [
+        ":repositories",
+        "@bazel_tools//tools/build_defs/repo:cache.bzl",
+    ],
 )
 
 bzl_library(
