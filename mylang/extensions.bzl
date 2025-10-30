@@ -49,8 +49,24 @@ def _toolchain_extension(module_ctx):
             mylang_version = selected,
             register = False,
         )
+    return module_ctx.extension_metadata(
+        # Return True if the behavior of the module extension is fully
+        # determined by its inputs. Return False if the module depends on
+        # outside state, for example, if it needs to fetch an external list
+        # of versions, URLs, or hashes that could change.
+        #
+        # If True, Bazel omits information from the lock file, expecting that
+        # it can be reproduced.
+        reproducible = True,
+    )
 
 mylang = module_extension(
     implementation = _toolchain_extension,
     tag_classes = {"toolchain": mylang_toolchain},
+    # Mark the extension as OS and architecture independent to simplify the
+    # lock file. An independent module extension may still download OS- and
+    # arch-dependent files, but it should download the same set of files
+    # regardless of the host platform.
+    os_dependent = False,
+    arch_dependent = False,
 )
