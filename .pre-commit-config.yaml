@@ -4,7 +4,7 @@
 
 # Commitizen runs in commit-msg stage
 # but we don't want to run the other hooks on commit messages
-default_stages: [commit]
+default_stages: [pre-commit]
 # Use a slightly older version of node by default
 # as the default uses a very new version of GLIBC
 default_language_version:
