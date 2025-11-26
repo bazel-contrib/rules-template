@@ -39,6 +39,8 @@ bazel_dep(name = "bazel_skylib_gazelle_plugin", version = "1.8.2", dev_dependenc
 bazel_dep(name = "bazel_lib", version = "3.0.0", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "8.2.1", dev_dependency = True)
 
+bazel_dep(name = "bazelrc-preset.bzl", version = "1.6.0")
+
 mylang = use_extension("//mylang:extensions.bzl", "mylang")
 mylang.toolchain(mylang_version = "1.14.2")
 use_repo(mylang, "mylang_toolchains")
