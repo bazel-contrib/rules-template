@@ -46,10 +46,6 @@ repos:
     rev: v0.14.0
     hooks:
       - id: yamlfmt
-        exclude: |
-          (?x)^(
-            .bcr/config.yml
-          )
   - repo: https://github.com/crate-ci/typos
     rev: v1.38.1
     hooks:
