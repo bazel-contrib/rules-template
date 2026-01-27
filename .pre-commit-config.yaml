@@ -47,6 +47,6 @@ repos:
     hooks:
       - id: yamlfmt
   - repo: https://github.com/crate-ci/typos
-    rev: v1.38.1
+    rev: v1.42.3
     hooks:
       - id: typos
