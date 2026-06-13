@@ -9,10 +9,6 @@ common --config=ruleset
 
 # Bazel settings that apply to this repository.
 # Take care to document any settings that you expect users to apply.
-# Settings that apply only to CI are in .github/workflows/ci.bazelrc
-
-# Required until this is the default; expected in Bazel 7
-common --enable_bzlmod
 
 # Ensure that the MODULE.bazel.lock file is complete and committed.
 # This is an important security measure: it ensures that developers on the

@@ -1,4 +1,4 @@
-"""Provides a simple way to test your rules as an external workspace.
+"""Provides a simple way to test your rules as an external module.
 Add a basic smoke-test target below.
 """
 

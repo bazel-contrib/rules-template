@@ -27,20 +27,22 @@ Run `bazel run //:gazelle` to keep them up-to-date.
 
 ## Using this as a development dependency of other rules
 
-You'll commonly find that you develop in another WORKSPACE, such as
+You'll commonly find that you develop in another workspace, such as
 some other ruleset that depends on rules_mylang, or in a nested
-WORKSPACE in the integration_tests folder.
+workspace in the integration_tests folder.
 
 To always tell Bazel to use this directory rather than some release
-artifact or a version fetched from the internet, run this from this
-directory:
+artifact or a version fetched from the internet, include this in the
+MODULE.bazel file.
 
-```sh
-OVERRIDE="--override_repository=rules_mylang=$(pwd)/rules_mylang"
-echo "common $OVERRIDE" >> ~/.bazelrc
+```starlark
+local_path_override(
+    module_name = "com_myorg_rules_mylang",
+    path = "path/to/mylang",
+)
 ```
 
-This means that any usage of `@rules_mylang` on your system will point to this folder.
+This means that any usage of `@com_myorg_rules_mylang` on your system will point to this folder.
 
 ## Releasing
 

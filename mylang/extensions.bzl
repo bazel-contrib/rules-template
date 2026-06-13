@@ -47,7 +47,6 @@ def _toolchain_extension(module_ctx):
         mylang_register_toolchains(
             name = name,
             mylang_version = selected,
-            register = False,
         )
     return module_ctx.extension_metadata(
         # Return True if the behavior of the module extension is fully
