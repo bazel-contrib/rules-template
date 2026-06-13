@@ -21,11 +21,16 @@ on:
         type: string
 jobs:
   publish:
-    uses: bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v1.0.0
+    # https://github.com/bazel-contrib/publish-to-bcr/blob/main/.github/workflows/publish.yaml
+    uses: bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v1.4.1
     with:
       tag_name: ${{ inputs.tag_name }}
       # GitHub repository which is a fork of the upstream where the Pull Request will be opened.
       registry_fork: myorg/bazel-central-registry
+      # Modules under personal GitHub accounts should set draft: true.
+      # Modules under a GitHub org using a machine user PAT should set draft: false.
+      # See https://github.com/bazel-contrib/publish-to-bcr#4-consider-whether-to-open-the-pr-as-a-draft
+      draft: true
     permissions:
       attestations: write
       contents: write

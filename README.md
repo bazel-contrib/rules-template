@@ -11,6 +11,7 @@ Features:
 - includes typical toolchain setup
 - CI configured with GitHub Actions
 - release using GitHub Actions just by pushing a tag
+- release flow supports GitHub [immutable releases](https://docs.github.com/en/code-security/concepts/supply-chain-security/immutable-releases)
 - the release artifact doesn't need to be built by Bazel, but can still exclude files and stamp the version
 
 Ready to get started? Copy this repo, then
