@@ -2,7 +2,7 @@ bcr_test_module:
   module_path: "e2e/smoke"
   matrix:
     platform: ["debian11", "macos", "ubuntu2204", "windows"]
-    bazel: ["9.x", "8.x"]
+    bazel: ["9.*", "8.*"]
   tasks:
     run_tests:
       name: "Run test module"
