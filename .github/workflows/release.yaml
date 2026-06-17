@@ -21,7 +21,7 @@ permissions:
 jobs:
   release:
     # https://github.com/bazel-contrib/.github/blob/master/.github/workflows/release_ruleset.yaml
-    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@v7.7.7
+    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@v7.7.0
     with:
       release_files: rules_mylang-*.tar.gz
       prerelease: false
