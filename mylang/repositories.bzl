@@ -4,13 +4,8 @@ These are needed for local dev, and users must install them as well.
 See https://docs.bazel.build/versions/main/skylark/deploying.html#dependencies
 """
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", _http_archive = "http_archive")
-load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 load("//mylang/private:toolchains_repo.bzl", "PLATFORMS", "toolchains_repo")
 load("//mylang/private:versions.bzl", "TOOL_VERSIONS")
-
-def http_archive(name, **kwargs):
-    maybe(_http_archive, name = name, **kwargs)
 
 _DOC = "Fetch external tools needed for mylang toolchain"
 _ATTRS = {
