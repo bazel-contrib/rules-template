@@ -45,12 +45,8 @@ def _mylang_toolchain_impl(ctx):
         tool_files = tool_files,
     )
 
-    # Export all the providers inside our ToolchainInfo
-    # so the resolved_toolchain rule can grab and re-export them.
     toolchain_info = platform_common.ToolchainInfo(
         mylanginfo = mylanginfo,
-        template_variables = template_variables,
-        default = default,
     )
     return [
         default,
