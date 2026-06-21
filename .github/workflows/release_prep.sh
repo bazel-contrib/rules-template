@@ -30,5 +30,11 @@ Add to your \`MODULE.bazel\` file:
 
 \`\`\`starlark
 bazel_dep(name = "com_myorg_rules_mylang", version = "${TAG:1}")
+
+mylang = use_extension("@com_myorg_rules_mylang//mylang:extensions.bzl", "mylang")
+mylang.toolchain(mylang_version = "1.14.2")
+use_repo(mylang, "mylang_toolchains")
+
+register_toolchains("@mylang_toolchains//:all")
 \`\`\`
 EOF
