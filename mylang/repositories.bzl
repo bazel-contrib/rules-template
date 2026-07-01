@@ -35,6 +35,15 @@ mylang_toolchain(
     # Base BUILD file for this repository
     repository_ctx.file("BUILD.bazel", build_content)
 
+    # Bazel <8.3.0 lacks rctx.repo_metadata
+    if not hasattr(repository_ctx, "repo_metadata"):
+        return None
+
+    # https://bazel.build/rules/lib/builtins/repository_ctx#repo_metadata
+    # Indicate whether the repo can be reproducibly refetched, allowing it
+    # to be cached across workspaces.
+    return repository_ctx.repo_metadata(reproducible = True)
+
 mylang_repositories = repository_rule(
     _mylang_repo_impl,
     doc = _DOC,
